@@ -18,7 +18,7 @@ func TestSignals(t *testing.T){
 
 
 	for i := 0; i < 10000; i++ {
-		t := newTask(i)
+		t := fakeTask(i)
 		Tasks = append(Tasks, NewTask(i, t))
 	}
 
@@ -44,7 +44,7 @@ func TestSignalsTimeouts(t *testing.T){
 
 
 	for i := 0; i < 10000; i++ {
-		t := newTask(i)
+		t := fakeTask(i)
 		tsk := NewTask(i, t)
 		tsk.SetTimeout(2)
 		Tasks = append(Tasks, tsk)
@@ -72,7 +72,7 @@ func TestTimeout(t *testing.T){
 
 
 	for i := 0; i < 10000; i++ {
-		t := newTask(i)
+		t := fakeTask(i)
 		tsk := NewTask(i, t)
 		tsk.SetTimeout(1)
 		Tasks = append(Tasks, tsk)
@@ -86,7 +86,7 @@ func TestTimeout(t *testing.T){
 }
 
 
-func newTask(i int) func() {
+func fakeTask(i int) func() {
 	return func() {
 		fmt.Printf("Start - Job: %d\n", i)
 		time.Sleep(time.Duration(rand.Intn(10)) * time.Second)
