@@ -1,28 +1,24 @@
 package casync
 
-
-
 import (
-	"testing"
 	"fmt"
-	"time"
+	"math/rand"
 	"os"
 	"syscall"
-	"math/rand"
+	"testing"
+	"time"
 )
 
-func TestSignals(t *testing.T){
+func TestSignals(t *testing.T) {
 
 	var Tasks []*Task
-
-
 
 	for i := 0; i < 10000; i++ {
 		t := fakeTask(i)
 		Tasks = append(Tasks, NewTask(i, t))
 	}
 
-	as := NewAsync(4,Tasks)
+	as := NewAsync(4, Tasks)
 
 	go func() { // after 3 second send a sigterm
 
@@ -31,17 +27,14 @@ func TestSignals(t *testing.T){
 		p.Signal(syscall.SIGTERM)
 	}()
 
-
-	as.ExecuteTasks();
+	as.ExecuteTasks()
 	//panic("Show stack")
 
 }
 
-func TestSignalsTimeouts(t *testing.T){
+func TestSignalsTimeouts(t *testing.T) {
 
 	var Tasks []*Task
-
-
 
 	for i := 0; i < 10000; i++ {
 		t := fakeTask(i)
@@ -50,7 +43,7 @@ func TestSignalsTimeouts(t *testing.T){
 		Tasks = append(Tasks, tsk)
 	}
 
-	as := NewAsync(4,Tasks)
+	as := NewAsync(4, Tasks)
 
 	go func() { // after 3 second send a sigterm
 
@@ -59,17 +52,14 @@ func TestSignalsTimeouts(t *testing.T){
 		p.Signal(syscall.SIGTERM)
 	}()
 
-
-	as.ExecuteTasks();
+	as.ExecuteTasks()
 	//panic("Show stack")
 
 }
 
-func TestTimeout(t *testing.T){
+func TestTimeout(t *testing.T) {
 
 	var Tasks []*Task
-
-
 
 	for i := 0; i < 10000; i++ {
 		t := fakeTask(i)
@@ -78,13 +68,12 @@ func TestTimeout(t *testing.T){
 		Tasks = append(Tasks, tsk)
 	}
 
-	as := NewAsync(4,Tasks)
+	as := NewAsync(4, Tasks)
 
-	as.ExecuteTasks();
+	as.ExecuteTasks()
 	//panic("Show stack")
 
 }
-
 
 func fakeTask(i int) func() {
 	return func() {
